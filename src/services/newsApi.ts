@@ -28,6 +28,9 @@ export const fetchArticles = async (
   const newsApiSearchByQueryAndCategory = `https://newsapi.org/v2/top-headlines?country=us&q=${query}&category=${filters.category}&from=${formattedDate}&apiKey=${newsAPIKey}`;
   const theGuardianSearchByQueryAndCategory = `https://content.guardianapis.com/search?q=${query}&section=${filters.category}&from-date=${formattedDate}&show-fields=thumbnail&api-key=${guardianAPIKey}`;
 
+  const newAPIDefault=`https://newsapi.org/v2/top-headlines?country=us&from=${formattedDate}&apiKey=${newsAPIKey}`;
+  const nytimesDefault = `https://api.nytimes.com/svc/news/v3/content/all/general.json?api-key=${newYorkTimesAPIKey}`;
+  const theGuardianDefault = `https://content.guardianapis.com/search?section=general&from-date=${formattedDate}&page-size=20&show-fields=thumbnail&api-key=${guardianAPIKey}`;
 
   //Form urls based on query,category and date
   const newsApiSearchUrl =
@@ -35,21 +38,21 @@ export const fetchArticles = async (
       ? newsApiSearchByQueryAndCategory
       : filters?.category?.length > 0
       ? newsApiSearchByCategory
-      : query.length > 0 && newsApiSearchByQueryUrl;
+      : query.length > 0 ? newsApiSearchByQueryUrl:newAPIDefault;
 
   const NYTimesSearchUrl =
     query.length > 0 && filters?.category?.length > 0
       ? ""
       : filters?.category?.length > 0
       ? NYTimesSearchByCategory
-      : query.length > 0 && NYTimesSearchByQueryUrl;
+      : query.length > 0 ? NYTimesSearchByQueryUrl:nytimesDefault;
 
   const theGuardianSearchUrl =
     query.length > 0 && filters?.category?.length > 0
       ? theGuardianSearchByQueryAndCategory
       : filters?.category?.length > 0
       ? theGuardianSearchByCategory
-      : query.length > 0 && theGuardianSearchByQueryUrl;
+      : query.length > 0 ? theGuardianSearchByQueryUrl:theGuardianDefault;
 
   try {
     // Fetch articles from news API
