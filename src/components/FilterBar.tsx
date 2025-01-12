@@ -26,6 +26,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange,personalized,onSea
       </select>
       {!personalized && <input
         type="date"
+        value={filters.date || new Date().toISOString().split("T")[0]}
         onChange={(e) => onFilterChange('date', e.target.value)}
         className="border border-gray-300 rounded-lg p-2 hover:border-blue-500 hover:shadow-lg transition duration-300"
       />}
