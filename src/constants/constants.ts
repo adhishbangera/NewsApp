@@ -10,3 +10,8 @@ export const NO_AUTHOR="No author available";
 
 export const GUARDIAN_SOURCE="The Guardian";
 export const NEWYORKTIME_SOURCE="New York Times";
+
+export const MAIN_TITLE="Innoscripta News";
+export const PERSONALISED_FEED_TITLE="Personalize Your Feed";
+export const SEARCH_CTA="Search";
+export const PERSONALISED_FEED_CTA="Personalize Feed";

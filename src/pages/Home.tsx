@@ -6,6 +6,7 @@ import { fetchArticles } from "../services/newsApi";
 import { Article } from "../types/Article";
 import Loader from "../components/Loader";
 import { Filter } from "../types/Filter";
+import { MAIN_TITLE, PERSONALISED_FEED_CTA, PERSONALISED_FEED_TITLE, SEARCH_CTA } from "../constants/constants";
 
 const Home: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
   return (
     <div className="p-4 ">
       <div className="flex items-center justify-center bg-blue-500 text-white p-6 font-bold text-lg rounded-md mb-4">
-        Innoscripta News
+        {MAIN_TITLE}
       </div>
       {!isPersonalized && (
         <div className="flex flex-col sm:flex-row md:flex-row justify-between gap-4">
@@ -81,7 +82,7 @@ const Home: React.FC = () => {
             onClick={onSearch}
             className="bg-red-900 text-white p-2 rounded"
           >
-            Search
+            {SEARCH_CTA}
           </button>
         </div>
       )}
@@ -94,14 +95,14 @@ const Home: React.FC = () => {
           className="bg-gray-200 hover:bg-gray-300 text-blue-500 font-semibold text-sm px-4 py-2 rounded shadow"
           onClick={togglePersonalizeSection}
         >
-          Personalize Feed
+          {PERSONALISED_FEED_CTA}
         </button>
       </div>
 
       {showPersonalizeSection && (
         <div className="p-4 bg-blue-500 mt-4 shadow-md rounded">
           <h2 className="text-lg font-bold mb-4 text-white">
-            Personalize Your Feed
+            {PERSONALISED_FEED_TITLE}
           </h2>
           <FilterBar
             onFilterChange={handleFilterChange}
