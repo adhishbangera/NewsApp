@@ -54,18 +54,6 @@ const newsApiSearchByQueryAndCategory = `https://newsapi.org/v2/top-headlines?co
 const theGuardianSearchByQueryAndCategory = `https://content.guardianapis.com/search?q=${query}&section=${filters.category}&from-date=${formattedDate}&show-fields=thumbnail&api-key=${guardianAPIKey}`;
 
 
-
-//   const newsApiSearchByQueryUrl = `https://newsapi.org/v2/everything?q=${query}&apiKey=${newsAPIKey}`
-//   const NYTimesSearchByQueryUrl = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${newYorkTimesAPIKey}`
-//   const theGuardianSearchByQueryUrl = `https://content.guardianapis.com/search?q=${query}&page-size=20&show-fields=thumbnail&api-key=${guardianAPIKey}`
-
-//   const newsApiSearchByCategory = `https://newsapi.org/v2/top-headlines?country=us&category=${filters.category}&apiKey=${newsAPIKey}`
-//   const NYTimesSearchByCategory = `https://api.nytimes.com/svc/news/v3/content/all/${filters.category}.json?api-key=${newYorkTimesAPIKey}`
-//   const theGuardianSearchByCategory = `https://content.guardianapis.com/search?section=${filters.category}&page-size=20&show-fields=thumbnail&api-key=${guardianAPIKey}`
-
-//   const newsApiSearchByQueryAndCategory = `https://newsapi.org/v2/top-headlines?country=us&q=${query}&category=${filters.category}&apiKey=${newsAPIKey}`
-//   const theGuardianSearchByQueryAndCategory = `https://content.guardianapis.com/search?q=${query}&section=${filters.category}&show-fields=thumbnail&api-key=${guardianAPIKey}`
-
   const newsApiSearchUrl =
   query.length > 0 && filters?.category?.length > 0
       ? newsApiSearchByQueryAndCategory
@@ -137,52 +125,33 @@ const theGuardianSearchByQueryAndCategory = `https://content.guardianapis.com/se
           }))
       );
 
-    // Resolve both promises in parallel
-    // const [newsArticles,guardianArticles] = await Promise.all([
-    //   newsAPIPromise,
-    //   guardianAPIPromise,
-    // //   nyTimesAPIPromise
-    // ]);
+      let apiPromises: Promise<Article[]>[] = [];
 
-    // // Merge and return the results
-    // return [...newsArticles,...guardianArticles];
+      switch (filters.source) {
+        case 'newsOrg':
+          apiPromises = [newsAPIPromise];
+          break;
+        case 'guardian':
+          apiPromises = [guardianAPIPromise];
+          break;
+        case 'nyTimes':
+          apiPromises = [nyTimesAPIPromise];
+          break;
+        default:
+          apiPromises = [newsAPIPromise, guardianAPIPromise, nyTimesAPIPromise];
+          break;
+      }
 
-        const [newsAPIPromise1, guardianAPIPromise1,nyTimesAPIPromise1] = await Promise.allSettled([
-          newsAPIPromise,
-          guardianAPIPromise,
-          nyTimesAPIPromise
-        ]);
-      
-        // Handle resolved and rejected promises
-        const newsArticles =
-          newsAPIPromise1.status === 'fulfilled' ? newsAPIPromise1.value : [];
-        const guardianArticles =
-          guardianAPIPromise1.status === 'fulfilled' ? guardianAPIPromise1.value : [];
-          const nyTimesArticles =
-          nyTimesAPIPromise1.status === 'fulfilled' ? nyTimesAPIPromise1.value : [];
-      
-        // Merge and return the results
-        return [...newsArticles, ...guardianArticles,...nyTimesArticles];
+      const results = await Promise.allSettled(apiPromises);
+
+      // Extract fulfilled results
+      const articles = results
+        .filter((result) => result.status === 'fulfilled')
+        .flatMap((result) => (result as PromiseFulfilledResult<Article[]>).value);
+  
+      return articles;
   } catch (error) {
     console.error('Error fetching articles:', error);
     return [];
   }
 };
-
-// export const useArticles = (query: string) => {
-//   const [articles, setArticles] = useState<Article[]>([]);
-//   const [loading, setLoading] = useState<boolean>(true);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       setLoading(true);
-//       const fetchedArticles = await fetchArticles(query);
-//       setArticles(fetchedArticles);
-//       setLoading(false);
-//     };
-
-//     fetchData();
-//   }, [query]);
-
-//   return { articles, loading };
-// };
