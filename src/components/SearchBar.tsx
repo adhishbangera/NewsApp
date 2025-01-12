@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ setQuery }) => {
         type="text"
         placeholder="Search articles..."
         onChange={(e) => setQuery(e.target.value)}
-        className="border border-gray-300 rounded-lg p-2 hover:border-blue-500 hover:shadow-lg transition duration-300"
+        className="border border-gray-300 rounded-lg p-2 hover:border-blue-500 hover:shadow-lg transition duration-300 w-full"
       />
     </div>
   );
