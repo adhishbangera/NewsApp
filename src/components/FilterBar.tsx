@@ -1,9 +1,5 @@
-// components/FilterBar.tsx
-import React, { useState } from 'react';
-
-interface FilterBarProps {
-  onFilterChange: (filterType: string, value: string) => void;
-}
+import React from 'react';
+import { FilterBarProps } from '../types/Filterbar';
 
 const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange,personalized,onSearch,setIsPersonalized,filters,setShowPersonalizeSection }) => {
     const savedPreferences = JSON.parse(localStorage.getItem("preferences") || "{}");
@@ -36,7 +32,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange,personalized,onSea
        {personalized && <input
         type="text"
         placeholder="Author"
-        value={savedPreferences?.author}
+        value={filters.author ?? savedPreferences?.author}
         onChange={(e) => onFilterChange('author', e.target.value)}
         className="border border-gray-300 rounded-lg p-2 hover:border-blue-500 hover:shadow-lg transition duration-300"
       /> }

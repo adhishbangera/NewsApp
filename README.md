@@ -1,50 +1,29 @@
-# React + TypeScript + Vite
+# About the app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This news application is build using ReactJS, Typescript, Vite and Tailwind CSS.
 
-Currently, two official plugins are available:
+This application displays news from three different sources, NewsAPI.org, The Guardian and New York Times.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Populate the fields such as searchbox or category and source filter and click on search button to get news related to the specified filters.
 
-## Expanding the ESLint configuration
+Personalization option is also provided where user can personalize their feed and save. The personalization will be retained until the values in the personalization section is set to their default values and saved.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Once the feed is personalised app will show 'Your Feed' instead of 'Latest News'
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Running the app
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+**Using docker**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Run 'docker build -t react-news-app:dev .' to build
+Run 'docker run -p 5173:5173 react-news-app:dev' to run the app
+Application will run on port [5173](http://localhost:5173/)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+**Without docker**
+Run 'npm i' to install dependencies
+Run 'npm run dev' to run the app which will open in port [5173](http://localhost:5173/)
+
+
+
+
 ```

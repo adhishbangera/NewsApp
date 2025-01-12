@@ -1,15 +1,11 @@
-// components/NewsCard.tsx
 import React from 'react';
 import { Article } from '../types/Article';
 
 interface NewsCardProps {
-  article: Article; // The article object to display
+  article: Article; 
 }
 
-
-
 const NewsCard: React.FC<NewsCardProps> = ({ article }) => {
-    console.log('aaaaa',article)
   return (
     <div className="border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4">
       {article.image && (
